@@ -18,3 +18,8 @@ a {
     display: flex;
     justify-content: center;
 }
+
+.log-text {
+    background-color: aliceblue;
+    border: 1px solid black;
+}

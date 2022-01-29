@@ -18,7 +18,6 @@ router.get("/listalllog/:id", async (req, res, next) => {
     try {
         const { stdout, stderr } = await exec(execCommand)
         if (stdout) {
-            console.log(stdout)
             res.render("index", {
                 title: "Express",
                 logs: stdout,
@@ -27,7 +26,7 @@ router.get("/listalllog/:id", async (req, res, next) => {
         } else {
             res.render("index", {
                 title: "Express",
-                logs: stdout,
+                logs: "exec docker log error",
                 names: names,
             })
         }
@@ -39,5 +38,10 @@ router.get("/listalllog/:id", async (req, res, next) => {
         })
     }
 })
-
+function reverseString(str) {
+    const arrayStrings = str.split("")
+    const reverseArray = arrayStrings.reverse()
+    const joinArray = reverseArray.join("")
+    return joinArray
+}
 module.exports = router
