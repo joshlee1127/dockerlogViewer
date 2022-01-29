@@ -1,5 +1,7 @@
 <body class="container">
-    <h1>Log view</h1>
+<h1>Log view</h1>
+<div class="my-logs"> 
+    
     <div class="my-buttons">
         <% for(var i=0; i<names.length; i++) {%>
             <form action="/listalllog/<%= names[i]%>" method="GET">
@@ -12,7 +14,11 @@
 
     <div class="form-group">
         <div class='log-text'>
-            <p ><%= logs%></p>
+            <textarea rows="25" cols="100">
+                <%= logs%>
+            </textarea>
         </div>
+        
     </div>
+</div>
 </body>
