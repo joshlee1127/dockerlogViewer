@@ -1,6 +1,6 @@
 var express = require("express")
 
-const { names } = require("../config/config")
+const { names, title } = require("../config/config")
 const util = require("util")
 const exec = util.promisify(require("child_process").exec)
 
@@ -8,7 +8,7 @@ var router = express.Router()
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-    res.render("index", { title: "Express", logs: "", names: names })
+    res.render("index", { title: title, logs: "", names: names })
 })
 
 router.get("/listalllog/:id", async (req, res, next) => {
@@ -19,29 +19,24 @@ router.get("/listalllog/:id", async (req, res, next) => {
         const { stdout, stderr } = await exec(execCommand)
         if (stdout) {
             res.render("index", {
-                title: "Express",
+                title: title,
                 logs: stdout,
                 names: names,
             })
         } else {
             res.render("index", {
-                title: "Express",
+                title: title,
                 logs: "exec docker log error",
                 names: names,
             })
         }
     } catch (err) {
         res.render("index", {
-            title: "Express",
+            title: title,
             logs: "no data",
             names: names,
         })
     }
 })
-function reverseString(str) {
-    const arrayStrings = str.split("")
-    const reverseArray = arrayStrings.reverse()
-    const joinArray = reverseArray.join("")
-    return joinArray
-}
+
 module.exports = router
