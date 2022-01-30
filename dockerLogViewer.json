@@ -1,6 +1,6 @@
 {
     "name": "dockerLogViewer",
-    "script": "npm start",
+    "script": "node ./bin/www.js",
     "cwd": "./",
     "log_file": "log/combined.outerr.log",
     "out_file": "log/out.log",
