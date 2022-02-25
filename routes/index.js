@@ -15,16 +15,18 @@ router.get("/listalllog/:id", async (req, res, next) => {
     const id = req.params.id
     // const execCommand = "docker ps -q | xargs -L 1 docker logs"
     // const execCommand = "docker logs --tail 1000 " + id
+    let execCommand
     if (id === "all") {
-        const execCommand =
+        execCommand =
             "docker-compose -f /data/eyeInTheSky/deployment/docker-compose.yml logs "
     } else {
-        const execCommand =
+        execCommand =
             "docker-compose -f /data/eyeInTheSky/deployment/docker-compose.yml logs " +
             id
     }
 
     try {
+        console.log("exec command: ", execCommand)
         const { stdout, stderr } = await exec(execCommand)
         if (stdout) {
             res.render("index", {
