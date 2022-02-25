@@ -1,28 +1,29 @@
 pipeline {
-  agent {
-    node {
-      label 'nodejs'
-    }
-
-  }
+  agent any
   stages {
     stage('checkout code') {
       agent any
       steps {
         container('base') {
           git(url: 'https://github.com/joshlee1127/dockerlogViewer.git', branch: 'main', changelog: true, poll: false)
-          sh 'ls -la'
+          sh '''ls -la
+pwd'''
+          sh 'hostname'
         }
 
       }
     }
 
-    stage('build & push') {
-      agent none
+    stage('build & push image') {
+      agent any
       steps {
-        container('nodejs') {
-          sh 'docker build -f Dockerfile-online -t $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
-          withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
+        container('base') {
+          sh '''ls -la
+pwd'''
+          sh ' hostname'
+          sh 'docker build -f ./my-test-flow/Dockerfile-online -t $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
+          withCredentials([usernamePassword(credentialsId : 'dockerhub-id' ,)]) {
+            sh 'echo "$DOCKER_PASSWORD && $REGISTRY && $DOCKER_USERNAME'
             sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
             sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
           }
@@ -63,9 +64,11 @@ pipeline {
   environment {
     DOCKER_CREDENTIAL_ID = 'dockerhub-id'
     GITHUB_CREDENTIAL_ID = 'github-id'
+    DOCKER_USERNAME = 'joshlee1127'
+    DOCKER_PASSWORD = 'ewe114kir1k91'
     KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
     REGISTRY = 'docker.io'
-    DOCKERHUB_NAMESPACE = 'docker_username'
+    DOCKERHUB_NAMESPACE = 'joshlee1127'
     GITHUB_ACCOUNT = 'kubesphere'
     APP_NAME = 'devops-java-sample'
   }
