@@ -1,0 +1,25 @@
+<body class="container">
+    <h1>Docker Restart</h1>
+    <div class="my-logs"> 
+        
+        <div class="my-buttons">
+            <% for(var i=0; i<names.length; i++) {%>
+                <form action="/restart/<%= names[i]%>" method="GET">
+                    <div class="form-row form-row-end">
+                        <button class="btn btn-primary" type="submit"><%= names[i] %></button>
+                    </div>
+                </form>
+            <% } %>
+        </div>
+    
+        <div class="form-group">
+            <div class='log-text'>
+                <textarea rows="25" cols="150">
+                    <%= logs%>
+                </textarea>
+            </div>
+            
+        </div>
+    </div>
+    </body>
+    
