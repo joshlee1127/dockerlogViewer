@@ -7,7 +7,7 @@ function dockerComposeLog(containerName) {
     )
 }
 
-async function dockerComposeRestart(containerName) {
+function dockerComposeRestart(containerName) {
     if (containerName === "all")
         return " sudo docker-compose -f /data/eyeInTheSky/deployment/docker-compose.yml down &&  sudo docker-compose -f /data/eyeInTheSky/deployment/docker-compose.yml up -d api dataextract syncdata "
     return (
