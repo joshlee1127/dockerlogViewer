@@ -59,6 +59,7 @@ router.get("/restart/:id", async (req, res) => {
                 names: names,
             })
         } else {
+            console.log(stderr)
             res.render("restart/restart", {
                 title: title,
                 logs: "exec docker log error",
