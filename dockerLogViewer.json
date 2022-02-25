@@ -4,5 +4,6 @@
     "cwd": "./",
     "log_file": "log/combined.outerr.log",
     "out_file": "log/out.log",
-    "error_file": "log/err.log"
+    "error_file": "log/err.log",
+    "watch": "./"
 }
